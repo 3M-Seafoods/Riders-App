@@ -13,5 +13,5 @@ auth.onAuthStateChanged(user => {
 });
 
 function logout() {
-  auth.signOut().then(() => location.href = "supplier-login.html");
+  auth.signOut().then(() => location.href = "index.html");
 }
