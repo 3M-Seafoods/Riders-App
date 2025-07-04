@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Supplier Dashboard - 3M Seafood</title>
+  <link rel="stylesheet" href="shared.css" />
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+  <script src="firebase-init.js" defer></script>
+  <script src="supplier-main.js" defer></script>
+</head>
+
+<body>
+  <div class="header-bar">
+    <h1>3M Seafood - Supplier</h1>
+    <p id="logged-user">Logged in as: </p>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <div class="dashboard">
+    <h2>Welcome!</h2>
+    <button onclick="location.href='supplier-pricing.html'">🔧 Manage Base Prices</button><br /><br />
+    <button onclick="location.href='supplier-orders.html'">📦 View/Edit Orders</button><br /><br />
+    <button onclick="location.href='supplier-history.html'">📜 Order History</button>
+    <button onclick="location.href='supplier-expenses.html'">💸 Record Expense</button><br /><br />
+
+  </div>
+</body>
+
+</html>

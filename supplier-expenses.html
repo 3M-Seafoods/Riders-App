@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Supplier - Record Expense</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
+  <!-- Shared Config and Scripts -->
+  <script src="firebase-init.js"></script>
+  <script src="supplier-expenses.js" defer></script>
+
+  <!-- Shared Styles -->
+  <link rel="stylesheet" href="shared.css" />
+</head>
+
+<body>
+  <header class="header-bar">
+    <h1>3M Supplier - Record Expense</h1>
+    <p id="logged-user">Logged in as: </p>
+    <button onclick="logout()">Logout</button>
+  </header>
+
+  <main class="dashboard">
+    <h2>📋 Submit Supplier Expense</h2>
+
+    <section>
+      <label for="expense-name">Expense Name</label>
+      <input type="text" id="expense-name" placeholder="e.g. Ice, Fuel, Plastic Bags" />
+
+      <label for="expense-amount">Amount (₱)</label>
+      <input type="number" id="expense-amount" placeholder="e.g. 350.00" step="0.01" />
+
+      <label for="expense-date">Date</label>
+      <input type="date" id="expense-date" />
+
+      <button onclick="submitExpense()">➕ Submit Expense</button>
+    </section>
+
+    <section style="margin-top: 30px;">
+      <h3>📑 Your Recent Expenses</h3>
+      <div id="supplier-expense-list">Loading...</div>
+    </section>
+
+    <div class="back-button">
+      <button onclick="location.href='supplier-main.html'">⬅️ Back to Dashboard</button>
+    </div>
+  </main>
+</body>
+
+</html>

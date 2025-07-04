@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Supplier Order History - 3M Seafood</title>
+  <link rel="stylesheet" href="shared.css" />
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+  <script src="firebase-init.js" defer></script>
+  <script src="supplier-history.js" defer></script>
+</head>
+
+<body>
+  <div class="header-bar">
+    <div class="back-button">
+      <button onclick="location.href='supplier-main.html'">← Back to Dashboard</button>
+    </div>
+    <h1>Supplier - Order History</h1>
+    <p id="logged-user">Logged in as: </p>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <div class="dashboard">
+    <h2>View Delivered Orders</h2>
+
+    <label>User:</label>
+    <select id="userSelect" onchange="loadDates()"></select>
+
+    <label>Date:</label>
+    <select id="dateSelect" onchange="loadOrderDetails()"></select>
+
+    <div id="history"></div>
+  </div>
+</body>
+
+</html>
