@@ -37,6 +37,13 @@ function getTodayPH() {
   return new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Manila" });
 }
 
+function isYesterday(dateStr, todayStr) {
+  const todayDate = new Date(todayStr);
+  const orderDate = new Date(dateStr);
+  const diff = (todayDate - orderDate) / (1000 * 60 * 60 * 24);
+  return diff === 1;
+}
+
 function loadTodaysOrders() {
   const today = getTodayPH();
   const selectedUser = document.getElementById("user-filter").value;
@@ -50,7 +57,14 @@ function loadTodaysOrders() {
     let found = false;
 
     Object.entries(orders).forEach(([orderId, order]) => {
-      if (order.date === today) {
+      const orderDate = order.date;
+      const status = order.status || "pending";
+
+      const showOrder =
+        orderDate === today ||
+        (isYesterday(orderDate, today) && status !== "delivered");
+
+      if (showOrder) {
         userSet.add(order.username);
 
         if (selectedUser === "all" || selectedUser === order.username) {
@@ -72,7 +86,7 @@ function loadTodaysOrders() {
             const subtotal = adjustedQty * basePrice;
             totalPayable += subtotal;
 
-            if (order.status === "pending") {
+            if (status === "pending") {
               itemsHTML += `
                 <div style="margin-bottom: 10px;">
                   <strong>${itemName}</strong><br>
@@ -104,14 +118,14 @@ function loadTodaysOrders() {
           });
 
           let buttonsHTML = "";
-          if (order.status === "pending") {
+          if (status === "pending") {
             buttonsHTML = `<button onclick="markAsDelivered('${orderId}')">✅ Mark as For Delivery</button>`;
-          } else if (order.status === "for delivery") {
+          } else if (status === "for delivery") {
             buttonsHTML = `
               <button disabled>✅ Sent</button>
               <button onclick="markAsTrulyDelivered('${orderId}')">📦 Mark as Delivered</button>
             `;
-          } else if (order.status === "delivered") {
+          } else if (status === "delivered") {
             buttonsHTML = `<button disabled>📦 Delivered</button>`;
           }
 
@@ -127,7 +141,7 @@ function loadTodaysOrders() {
           div.innerHTML = `
             <p><strong>User:</strong> ${order.username}</p>
             <p><strong>Date:</strong> ${order.date} ${timeString ? `(${timeString})` : ""}</p>
-            <p><strong>Status:</strong> ${order.status}</p>
+            <p><strong>Status:</strong> ${status}</p>
             ${itemsHTML}
             <div id="total-${orderId}" style="font-weight: bold; margin-top: 10px;">
               Total Payable: ₱${totalPayable.toFixed(2)}
