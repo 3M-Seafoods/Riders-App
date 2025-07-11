@@ -23,12 +23,10 @@ function logout() {
 function loadBasePrices() {
   db.ref("basePrices").once("value").then(snapshot => {
     const prices = snapshot.val() || {};
-
     basePrices = {
       ...prices,
       shrimp200g: prices.shrimp200 || prices.shrimp200g || 0
     };
-
     loadTodaysOrders();
   });
 }
@@ -60,13 +58,14 @@ function loadTodaysOrders() {
       const orderDate = order.date;
       const status = order.status || "pending";
 
+      if (status === "received") return; // ❌ Skip received orders
+
       const showOrder =
         orderDate === today ||
-        (isYesterday(orderDate, today) && status !== "delivered");
+        (isYesterday(orderDate, today) && status !== "received");
 
       if (showOrder) {
         userSet.add(order.username);
-
         if (selectedUser === "all" || selectedUser === order.username) {
           found = true;
 
